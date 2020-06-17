@@ -1,14 +1,27 @@
+input.onButtonPressed(Button.A, function () {
+    life.setPixelBrightness(randint(0, 4), randint(0, 4), 200)
+life.showImage(0)
+})
+input.onButtonPressed(Button.B, function () {
+    life.setPixelBrightness(randint(0, 4), randint(0, 4), 200)
+life.showImage(0)
+})
+input.onGesture(Gesture.Shake, function () {
+    life.setPixelBrightness(randint(0, 4), randint(0, 4), 200)
+life.showImage(0)
+})
 let k = 0
 let l = 0
 let n = 0
-let life = images.createImage(`
+let life: Image = null
+life = images.createImage(`
     . . . . .
     . . # . .
     . . # . .
     . . # . .
     . . . . .
     `)
-led.setBrightness(33)
+led.setBrightness(200)
 basic.forever(function () {
     life.showImage(0)
     for (let y = 0; y <= 4; y++) {
@@ -27,13 +40,15 @@ basic.forever(function () {
                     }
                 }
             }
-            if (led.pointBrightness(x, y) > 0) {
+            if (led.pointBrightness(x, y) >= 10) {
                 if (n < 3 || n > 4) {
                     life.setPixel(x, y, false)
+                } else {
+                    life.setPixelBrightness(x, y, led.pointBrightness(x, y)-20)
                 }
             } else {
                 if (n == 3) {
-                    life.setPixel(x, y, true)
+                    life.setPixelBrightness(x, y, 200)
                 }
             }
         }
